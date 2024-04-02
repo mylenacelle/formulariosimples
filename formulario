@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulário de Dados Pessoais</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/datepicker-i18n@1.0.0/dist/jquery.ui.datepicker-pt-BR.min.js"></script>
+<script>
+  $(function() {
+    $("#data_nascimento").datepicker({
+      dateFormat: 'dd/mm/yy',
+      dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+      dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+      dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+      monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+      monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+      nextText: 'Proximo',
+      prevText: 'Anterior'
+    });
+    
+    $("#data_nascimento").on("change", function() {
+      var inputDate = $(this).val();
+      var dateParts = inputDate.split('/');
+      var formattedDate = '';
+      
+      if (dateParts.length === 3) {
+        var day = parseInt(dateParts[0], 10);
+        var month = parseInt(dateParts[1], 10);
+        var year = parseInt(dateParts[2], 10);
+        
+        var newDate = new Date(year, month - 1, day);
+        
+        if (!isNaN(newDate.getTime())) {
+          formattedDate = ('0' + day).slice(-2) + '/' + ('0' + month).slice(-2) + '/' + year;
+          $("#data_nascimento_aviso").text('');
+        } else {
+          $("#data_nascimento_aviso").text('Data inválida!');
+          $(this).val('');
+        }
+      } else {
+        $("#data_nascimento_aviso").text('Formato de data inválido!');
+        $(this).val('');
+      }
+    });
+  });
+</script>
+</head>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f2f2f2;
+}
+
+.container {
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.container h2 {
+  margin-bottom: 30px;
+}
+
+.input-container {
+  margin-bottom: 20px;
+}
+
+.input-container label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-container input,
+.input-container textarea {
+  width: calc(100% - 10px);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.aviso {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+
+</style>
+
+<body>
+<div class="container">
+  <h2>Formulário Cadastro Dançarinos 2024 - Versão Teste</h2>
+  <form action="/submit" method="post">
+    <div class="input-container">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required>
+    </div>
+    <div class="input-container">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+    <div class="input-container">
+      <label for="data_nascimento">Data de Nascimento:</label>
+      <input type="text" id="data_nascimento" name="data_nascimento" required>
+      <div id="data_nascimento_aviso" class="aviso"></div>
+    </div>
+    <div class="input-container">
+      <label for="telefone">Telefone:</label>
+      <input type="tel" id="telefone" name="telefone">
+    </div>
+    <div class="input-container">
+      <label for="endereco">Endereço:</label>
+      <input type="endereço" id="endereco" name="endereco" required>
+    </div>
+    <div class="input-container">
+      <label for="estado">Estado:</label>
+      <select id="estado" name="estado">
+        <option value="RJ">Rio de Janeiro</option>
+        <option value="SP">São Paulo</option>
+        <option value="AC">Acre</option>
+        <option value="AL">Alagoas</option>
+        <option value="AP">Amapá</option>
+        <option value="AM">Amazonas</option>
+        <option value="BA">Bahia</option>
+        <option value="CE">Ceará</option>
+        <option value="DF">Distrito Federal</option>
+        <option value="ES">Espírito Santo</option>
+        <option value="GO">Goiás</option>
+        <option value="MA">Maranhão</option>
+        <option value="MT">Mato Grosso</option>
+        <option value="MS">Mato Grosso do Sul</option>
+        <option value="MG">Minas Gerais</option>
+        <option value="PA">Pará</option>
+        <option value="PB">Paraíba</option>
+        <option value="PR">Paraná</option>
+        <option value="PE">Pernambuco</option>
+        <option value="PI">Piauí</option>
+        <option value="RN">Rio Grande do Norte</option>
+        <option value="RS">Rio Grande do Sul</option>
+        <option value="RO">Rondônia</option>
+        <option value="RR">Roraima</option>
+        <option value="SC">Santa Catarina</option>
+        <option value="SE">Sergipe</option>
+        <option value="TO">Tocantins</option>
+      </select>
+    </div>
+    <button type="submit">Enviar</button>
+  </form>
+</div>
+</body>
+</html>
